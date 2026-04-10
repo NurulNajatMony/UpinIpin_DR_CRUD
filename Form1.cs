@@ -47,4 +47,48 @@ namespace CRUDMahasiswaADO
             connectToDatabase();
         }
 
-        
+        //langkah 6 (menampilkan data dengan sqldatareader)
+        private void btnShowData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (conn.State == System.Data.ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                FormMahasiswa1.Rows.Clear();
+                FormMahasiswa1.Columns.Clear();
+
+                FormMahasiswa1.Columns.Add("NIM", "NIM");
+                FormMahasiswa1.Columns.Add("Nama", "Nama");
+                FormMahasiswa1.Columns.Add("JenisKelamin", "Jenis Kelamin");
+                FormMahasiswa1.Columns.Add("TanggalLahir", "Tanggal Lahir");
+                FormMahasiswa1.Columns.Add("Alamat", "Alamat");
+                FormMahasiswa1.Columns.Add("KodeProdi", "Kode Prodi");
+
+                string query = "SELECT * FROM Mahasiswa";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    FormMahasiswa1.Rows.Add(
+                        reader["NIM"].ToString(),
+                        reader["Nama"].ToString(),
+                        reader["JenisKelamin"].ToString(),
+                        Convert.ToDateTime(reader["TanggalLahir"]).ToShortDateString(),
+                        reader["Alamat"].ToString(),
+                        reader["KodeProdi"].ToString()
+                    );
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal Menampilkan Data: " + ex.Message);
+            }
+        }
+
+       
