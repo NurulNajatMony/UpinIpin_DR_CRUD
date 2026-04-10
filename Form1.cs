@@ -270,4 +270,22 @@ namespace CRUDMahasiswaADO
             txtNIM.Focus();
         }
 
-       
+        //langkah 12 - mengatur tampilan awal form
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cmbJK.Items.Clear();
+            cmbJK.Items.Add("L");
+            cmbJK.Items.Add("P");
+
+            FormMahasiswa1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            FormMahasiswa1.MultiSelect = false;
+            FormMahasiswa1.ReadOnly = true;
+            FormMahasiswa1.AllowUserToAddRows = false;
+            FormMahasiswa1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            FormMahasiswa1.CellClick += dataGridView1_CellClick;
+        }
+
+    }
+}
+
